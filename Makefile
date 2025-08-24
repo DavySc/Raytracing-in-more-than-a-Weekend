@@ -5,7 +5,6 @@ BUILDDIR := build
 TARGET := main
 
 SRC := $(wildcard $(SRCDIR)/*.cc)
-OBJ := $(patsubst $(SRCDIR)/%.cc, $(BUILDDIR)/%.o, $(SRC))
 DEPS := $(wildcard $(INCDIR)/*.h)
 
 # Default build is debug
@@ -13,11 +12,13 @@ BUILD ?= debug
 
 ifeq ($(BUILD),release)
     CXXFLAGS := -std=c++23 -Wall -Wextra -O2 -I$(INCDIR)
-    BUILDDIR := build
+    BUILDDIR := build/release
 else
     CXXFLAGS := -std=c++23 -Wall -Wextra -g -O0 -DDEBUG -I$(INCDIR)
-    BUILDDIR := build
+    BUILDDIR := build/debug
 endif
+
+OBJ := $(patsubst $(SRCDIR)/%.cc, $(BUILDDIR)/%.o, $(SRC))
 
 .PHONY: all debug release clean
 
