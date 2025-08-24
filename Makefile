@@ -1,14 +1,39 @@
 CXX := g++
-CXXFLAGS := -std=c++23 -Wall -Wextra -g
-DEPS := color.h vec3.h
-OBJ := main.o color.o
+SRCDIR := src
+INCDIR := include
+BUILDDIR := build
+TARGET := main
 
-%.o: %.cc $(DEPS)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+SRC := $(wildcard $(SRCDIR)/*.cc)
+OBJ := $(patsubst $(SRCDIR)/%.cc, $(BUILDDIR)/%.o, $(SRC))
+DEPS := $(wildcard $(INCDIR)/*.h)
 
-main: $(OBJ)
+# Default build is debug
+BUILD ?= debug
+
+ifeq ($(BUILD),release)
+    CXXFLAGS := -std=c++23 -Wall -Wextra -O2 -I$(INCDIR)
+    BUILDDIR := build
+else
+    CXXFLAGS := -std=c++23 -Wall -Wextra -g -O0 -DDEBUG -I$(INCDIR)
+    BUILDDIR := build
+endif
+
+.PHONY: all debug release clean
+
+all: $(BUILDDIR)/$(TARGET)
+debug: BUILD=debug
+debug: all
+release: BUILD=release
+release: all
+
+$(BUILDDIR)/$(TARGET): $(OBJ)
+	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-.PHONY: clean
+$(BUILDDIR)/%.o: $(SRCDIR)/%.cc $(DEPS)
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
 clean:
-	rm -f *.o main
+	rm -rf build

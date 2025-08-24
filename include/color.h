@@ -1,4 +1,12 @@
-#include "color.h"
+#ifndef COLOR_H
+#define COLOR_H
+
+#include "vec3.h"
+
+#include <iostream>
+#include <iterator>
+
+using color = vec3;
 void write_color(std::ostream& out, const color& pixel_color) {
     auto red = pixel_color.x();
     auto green = pixel_color.y();
@@ -10,3 +18,5 @@ void write_color(std::ostream& out, const color& pixel_color) {
 
     out << redbyte << ' ' << greenbyte << ' ' << bluebyte << '\n';
 }
+
+#endif 
