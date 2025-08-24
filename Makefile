@@ -37,4 +37,4 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.cc $(DEPS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -rf build
+	@rm -rf build
