@@ -1,4 +1,4 @@
-CXX := g++
+CXX := clang++
 SRCDIR := src
 INCDIR := include
 TARGET := main
