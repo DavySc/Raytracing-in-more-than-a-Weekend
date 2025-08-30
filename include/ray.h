@@ -4,7 +4,7 @@
 #include "vec3.h"
 
 struct ray {
-  vec3 direction;
+  Vec3 direction;
   point3 origin;
 };
 
