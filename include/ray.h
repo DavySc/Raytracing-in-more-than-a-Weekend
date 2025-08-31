@@ -3,12 +3,12 @@
 
 #include "vec3.h"
 
-struct ray {
+struct Ray {
   Vec3 direction;
-  point3 origin;
+  Point3 origin;
 };
 
-point3 ray_at(const ray* r, double t) {
+Point3 ray_at(const Ray* r, double t) {
   return r->origin + t * r->direction;
 }
 #endif // !RAY_H
